@@ -1,8 +1,12 @@
 const figures = {
-    max: {src: 'img/max.jpg', alt: 'roadster3840'},
-    mid: {src: 'img/middle.jpg', alt: 'roadster1440'},
-    nor: {src: 'img/normal.jpg', alt: 'roadster800'},
-    min: {src: 'img/min.jpg', alt: 'roadster400'},
+    full: {src: 'img/full.jpg', alt: 'full'},
+    maximum: {src: 'img/maximum.jpg', alt: 'maximum'},
+    super: {src: 'img/super.jpg', alt: 'super'},
+    good: {src: 'img/good.jpg', alt: 'good'},
+    middle: {src: 'img/middle.jpg', alt: 'middle'},
+    normal: {src: 'img/normal.jpg', alt: 'normal'},
+    improved: {src: 'img/improved.jpg', alt: 'improved'},
+    minimum: {src: 'img/minimum.jpg', alt: 'minimum'},
 }
 
 class SmartFotoPlugin {
@@ -20,27 +24,35 @@ class SmartFotoPlugin {
     }
 
     get setEvents() {
-        document.addEventListener('DOMContentLoaded', this.renderTemplate)
-        document.addEventListener('load', this.postRenderTemplate)
-        document.addEventListener('resize', this.postRenderTemplate)
+        window.addEventListener('DOMContentLoaded', this.renderTemplate)
+        window.addEventListener('load', this.postRenderTemplate)
+        window.addEventListener('resize', this.postRenderTemplate)
     }
 
-    suitablePicture(figures) {
+    get suitablePicture() {
         switch (true) {
-            case this.width > 1401:
-                return figures.max
-            case this.width > 801:
-                return figures.mid
-            case this.width > 601:
-                return figures.nor
+            case this.width > 1365:
+                return this._settings.figures.full
+            case this.width > 1000:
+                return this._settings.figures.maximum
+            case this.width > 827:
+                return this._settings.figures.super
+            case this.width > 719:
+                return this._settings.figures.good
+            case this.width > 639:
+                return this._settings.figures.middle
+            case this.width > 479:
+                return this._settings.figures.normal
+            case this.width > 319:
+                return this._settings.figures.improved
             default:
-                return figures.min
+                return this._settings.figures.minimum
         }
     }
 
 
     get renderTemplate() {
-            this.pluginClass.innerHTML = `
+        this.pluginClass.innerHTML = `
             <figure style="background-image: url(${this.defaultFigure.src})">
                  <img
                      decoding="async"
@@ -54,7 +66,7 @@ class SmartFotoPlugin {
 
     get postRenderTemplate() {
         this.width = document.documentElement.clientWidth
-        this.figure = this.suitablePicture(this._settings.figures)
+        this.figure = this.suitablePicture
         this.renderTemplate
     }
 
@@ -62,10 +74,14 @@ class SmartFotoPlugin {
     static getDefaultSettings() {
         return {
             figures: {
-                max: {src: 'img/max.jpg', alt: 'roadster3840'},
-                mid: {src: 'img/middle.jpg', alt: 'roadster1440'},
-                nor: {src: 'img/normal.jpg', alt: 'roadster800'},
-                min: {src: 'img/min.jpg', alt: 'roadster400'},
+                full: {src: 'img/full.jpg', alt: 'full'},
+                maximum: {src: 'img/maximum.jpg', alt: 'maximum'},
+                super: {src: 'img/super.jpg', alt: 'super'},
+                good: {src: 'img/good.jpg', alt: 'good'},
+                middle: {src: 'img/middle.jpg', alt: 'middle'},
+                normal: {src: 'img/normal.jpg', alt: 'normal'},
+                improved: {src: 'img/improved.jpg', alt: 'improved'},
+                minimum: {src: 'img/minimum.jpg', alt: 'minimum'},
             }
         }
     }
