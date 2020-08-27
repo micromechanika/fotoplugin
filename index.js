@@ -65,7 +65,9 @@ class SmartFotoPlugin {
 
 
     get postRenderTemplate() {
-        this.width = document.documentElement.clientWidth
+        // this.width = document.documentElement.clientWidth
+        const element = this.pluginClass.getBoundingClientRect()
+        this.width = element.width
         this.figure = this.suitablePicture
         this.renderTemplate
     }
