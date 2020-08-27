@@ -20,12 +20,12 @@ class SmartFotoPlugin {
         this.width = 0
         this.defaultFigure = this._settings.figures.minimum
         this.figure = this._settings.figures.minimum
-        this._setEvents
+        this.setEvents
     }
 
-    get _setEvents() {
+    get setEvents() {
         document.addEventListener('DOMContentLoaded', this.renderTemplate)
-        // document.addEventListener('load', this.postRenderTemplate)
+        window.addEventListener('load', this.postRenderTemplate)
         window.addEventListener('resize', this.postRenderTemplate)
     }
 
@@ -68,7 +68,9 @@ class SmartFotoPlugin {
         const element = this.pluginClass.getBoundingClientRect()
         this.width = element.width
         this.figure = this.suitablePicture
-        console.log('w:',this.width,'path:',this.figure )
+        const width2 = 0
+        console.log('w:', this.width, 'path:', this.figure)
+        console.log('w2:', width2)
         this.renderTemplate
     }
 
