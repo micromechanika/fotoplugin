@@ -18,8 +18,8 @@ class SmartFotoPlugin {
     get init() {
         this.pluginClass = document.querySelector('.SmartFotoPlugin')
         this.width = 0
-        this.defaultFigure = this._settings.figures.min
-        this.figure = this._settings.figures.min
+        this.defaultFigure = this._settings.figures.minimum
+        this.figure = this._settings.figures.minimum
         this.setEvents
     }
 
