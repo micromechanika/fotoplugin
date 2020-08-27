@@ -14,11 +14,13 @@ class SmartFotoPlugin {
     get init() {
         this.pluginClass = document.querySelector('.SmartFotoPlugin')
         this.width = 0
+        this.defaultFigure = this._settings.figures.min
+        this.figure = this._settings.figures.min
         this.setEvents
     }
 
     get setEvents() {
-        document.addEventListener('DOMContentLoaded', this.renderTemplate())
+        document.addEventListener('DOMContentLoaded', this.renderTemplate)
         document.addEventListener('load', this.postRenderTemplate)
         document.addEventListener('resize', this.postRenderTemplate)
     }
@@ -37,14 +39,14 @@ class SmartFotoPlugin {
     }
 
 
-     renderTemplate(data=this._settings.figures.min) {
+    get renderTemplate() {
             this.pluginClass.innerHTML = `
-            <figure style="background-image: url(${this._settings.figures.min.src})">
+            <figure style="background-image: url(${this.defaultFigure.src})">
                  <img
                      decoding="async"
-                     src="${data.src}"
-                     srcset="${data.src}"
-                     alt="${data.alt}"
+                     src="${this.figure.src}"
+                     srcset="${this.figure.src}"
+                     alt="${this.figure.alt}"
                  />
             </figure>`
     }
@@ -52,8 +54,8 @@ class SmartFotoPlugin {
 
     get postRenderTemplate() {
         this.width = document.documentElement.clientWidth
-        const data = this.suitablePicture(this._settings.figures)
-        this.renderTemplate(data)
+        this.figure = this.suitablePicture(this._settings.figures)
+        this.renderTemplate
     }
 
 
