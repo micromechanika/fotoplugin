@@ -24,9 +24,15 @@ class SmartFotoPlugin {
     }
 
     get setEvents() {
-        document.addEventListener('DOMContentLoaded', this.renderTemplate)
-        window.addEventListener('load', this.postRenderTemplate)
-        window.addEventListener('resize', this.postRenderTemplate)
+        document.addEventListener('DOMContentLoaded', () => {
+            this.renderTemplate
+        }, true)
+        window.addEventListener('load', () => {
+            this.postRenderTemplate
+        }, true)
+        window.addEventListener('resize', () => {
+            this.postRenderTemplate
+        }, true)
     }
 
     get suitablePicture() {
@@ -63,9 +69,8 @@ class SmartFotoPlugin {
     }
 
     get postRenderTemplate() {
-        // const element = this.pluginClass.getBoundingClientRect()
-        // this.width = element.width
-        this.width = document.documentElement.clientWidth
+        const element = this.pluginClass.getBoundingClientRect()
+        this.width = element.width
         this.figure = this.suitablePicture
         console.log('w:', this.width, 'path:', this.figure)
         this.renderTemplate
