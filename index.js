@@ -20,6 +20,9 @@ class SmartFotoPlugin {
         this.width = 0
         this.defaultFigure = this._settings.figures.minimum
         this.figure = this._settings.figures.minimum
+        this.newFigure = document.createElement('figure')
+        this.newImage = document.createElement('img')
+        this.makeConstruction
         this.setEvents
     }
 
@@ -56,16 +59,25 @@ class SmartFotoPlugin {
         }
     }
 
+    get makeConstruction(){
+        this.pluginClass.appendChild(this.newFigure)
+        this.newFigure.appendChild(this.newImage)
+    }
+
+    get makeFigure() {
+        this.newFigure.setAttribute('style',`background-image: url(${this.defaultFigure.src})`)
+    }
+
+    get makeImage() {
+        this.newImage.setAttribute('decoding','async')
+        this.newImage.setAttribute('src',`${this.figure.src}`)
+        this.newImage.setAttribute('srcset',`${this.figure.src}`)
+        this.newImage.setAttribute('alt',`${this.figure.alt}`)
+    }
+
     get renderTemplate() {
-        this.pluginClass.innerHTML = `
-            <figure style="background-image: url(${this.defaultFigure.src})">
-                 <img
-                     decoding="async"
-                     src="${this.figure.src}"
-                     srcset="${this.figure.src}"
-                     alt="${this.figure.alt}"
-                 />
-            </figure>`
+        this.makeFigure
+        this.makeImage
     }
 
     get postRenderTemplate() {
@@ -73,7 +85,7 @@ class SmartFotoPlugin {
         this.width = element.width
         this.figure = this.suitablePicture
         console.log('w:', this.width, 'path:', this.figure)
-        this.renderTemplate
+        this.makeImage
     }
 
     static getDefaultSettings() {
