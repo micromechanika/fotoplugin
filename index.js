@@ -50,7 +50,6 @@ class SmartFotoPlugin {
         }
     }
 
-
     get renderTemplate() {
         this.pluginClass.innerHTML = `
             <figure style="background-image: url(${this.defaultFigure.src})">
@@ -63,7 +62,6 @@ class SmartFotoPlugin {
             </figure>`
     }
 
-
     get postRenderTemplate() {
         // const element = this.pluginClass.getBoundingClientRect()
         // this.width = element.width
@@ -72,7 +70,6 @@ class SmartFotoPlugin {
         console.log('w:', this.width, 'path:', this.figure)
         this.renderTemplate
     }
-
 
     static getDefaultSettings() {
         return {
