@@ -131,10 +131,7 @@ const config = {
     mode: 'development',
     devtool: isDev ? 'source-map' : '',
     entry: {
-        opencart: ['./opencart.js'],
-        stylesheet: ['./stylesheet.js'],
-        common: ['./common.js'],
-        'swiper.jquery': ['./swiper.jquery.js']
+        index: ['./index.js']
     },
     output: {
         filename: filename('js'),
@@ -215,3 +212,4 @@ const config = {
 };
 
 module.exports = config;
+
