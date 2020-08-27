@@ -23,13 +23,11 @@ class SmartFotoPlugin {
         this.newFigure = document.createElement('figure')
         this.newImage = document.createElement('img')
         this.makeConstruction
+        this.renderAttributeImage
         this.setEvents
     }
 
     get setEvents() {
-        document.addEventListener('DOMContentLoaded', () => {
-            this.renderTemplate
-        }, true)
         window.addEventListener('load', () => {
             this.postRenderTemplate
         }, true)
@@ -59,33 +57,40 @@ class SmartFotoPlugin {
         }
     }
 
-    get makeConstruction(){
-        this.pluginClass.appendChild(this.newFigure)
-        this.newFigure.appendChild(this.newImage)
+    get makeConstruction() {
+        const fig = this.pluginClass.appendChild(this.newFigure)
+        fig.appendChild(this.newImage)
+        this.unchangedAttributesFigure
+        this.unchangedAttributesImage
     }
 
-    get makeFigure() {
-        this.newFigure.setAttribute('style',`background-image: url(${this.defaultFigure.src})`)
+    get unchangedAttributesFigure() {
+        this.newFigure.setAttribute('style', `
+        width: auto;
+        height: auto;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-image: url(${this.defaultFigure.src})`
+        )
     }
 
-    get makeImage() {
-        this.newImage.setAttribute('decoding','async')
-        this.newImage.setAttribute('src',`${this.figure.src}`)
-        this.newImage.setAttribute('srcset',`${this.figure.src}`)
-        this.newImage.setAttribute('alt',`${this.figure.alt}`)
+    get unchangedAttributesImage() {
+        this.newImage.setAttribute('style', 'width: 100%; height: 100%; object-fit: cover;')
+        this.newImage.setAttribute('decoding', 'async')
     }
 
-    get renderTemplate() {
-        this.makeFigure
-        this.makeImage
+    get renderAttributeImage() {
+        this.newImage.setAttribute('src', `${this.figure.src}`)
+        this.newImage.setAttribute('srcset', `${this.figure.src}`)
+        this.newImage.setAttribute('alt', `${this.figure.alt}`)
     }
 
     get postRenderTemplate() {
         const element = this.pluginClass.getBoundingClientRect()
         this.width = element.width
         this.figure = this.suitablePicture
-        console.log('w:', this.width, 'path:', this.figure)
-        this.makeImage
+        this.renderAttributeImage
     }
 
     static getDefaultSettings() {
