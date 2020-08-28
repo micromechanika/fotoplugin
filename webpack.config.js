@@ -3,31 +3,13 @@ require('dotenv').config();
 const path = require('path');
 const isDev = process.env.NODE_ENV !== 'production';
 
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserWebpackPlugin = require('terser-webpack-plugin');
-const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-
-//functions control webpack parameters
 
 const optimization = () => {
     const config = {};
     if (!isDev) {
         config.minimizer = [
-            new OptimizeCssAssetsWebpackPlugin({
-                assetNameRegExp: /\.css$/g,
-                cssProcessor: require('cssnano'),
-                cssProcessorPluginOptions: {
-                    preset: ['default', {discardComments: {removeAll: true}}],
-                },
-                canPrint: true
-            }),
-            new TerserWebpackPlugin(),
             new UglifyJsPlugin({
                 test: /\.js(\?.*)?$/i,
                 compress: {},
@@ -46,26 +28,6 @@ const optimization = () => {
     return config;
 };
 const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`;
-const loader = (add = 'css') => {
-    const loaders = [
-        {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-                hmr: isDev,
-                reloadAll: true,
-            },
-        },
-    ];
-    switch (true) {
-        case add !== 'css':
-            loaders.push(...['css-loader', add += '-loader']);
-            break;
-        default:
-            loaders.push(add += '-loader');
-            break;
-    }
-    return loaders;
-};
 const babelLoader = (add = 'js') => {
 
     let preset = [];
@@ -99,29 +61,13 @@ const babelLoader = (add = 'js') => {
 };
 const plugins = () => {
     const base = [
-        new HTMLWebpackPlugin({
-            template: './index.html',
-            minify: {
-                removeComments: true,
-                collapseWhitespace: !isDev
-            },
-        }),
-        new CleanWebpackPlugin(),
         new CopyWebpackPlugin([
             {
-                from: path.resolve(__dirname, './src/assets/images/'),
-                to: path.resolve(__dirname, 'dist/images/')
+                from: path.resolve(__dirname, './src/img/'),
+                to: path.resolve(__dirname, 'dist/img/')
             },
         ]),
-        new MiniCssExtractPlugin({
-            filename: '[name].css',
-        }),
-        new OptimizeCssAssetsWebpackPlugin(),
     ];
-
-    if (isDev) {
-        base.push(new BundleAnalyzerPlugin());
-    }
 
     return base;
 };
@@ -169,40 +115,7 @@ const config = {
                     /node_modules/
                 ],
                 use: babelLoader('jsx')
-            },
-            {
-                test: /\.css$/i,
-                use: loader('css'),
-            },
-            {
-                test: /\.less$/i,
-                use: loader('less'),
-            },
-            {
-                test: /\.(s[ac])ss$/i,
-                use: loader('sass'),
-            },
-            // {
-            //     test: /\.(png|jpe?g|gif|svg)$/i,
-            //     loader: 'file-loader',
-            //     options: {
-            //         name: '[hash].[ext]',
-            //         outputPath: 'images',
-            //     }
-            // },
-            {
-                test: /\.(ttf|woff|woff2|eot)$/i,
-                loader: ['file-loader'],
-            },
-            {
-                test: /\.xml$/i,
-                loader: ['xml-loader'],
-            },
-            {
-                test: /\.csv$/i,
-                loader: 'csv-loader'
             }
-
         ]
     },
     devServer: {
