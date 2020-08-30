@@ -50,7 +50,7 @@ class SmartFotoPlugin {
                 return this._settings.figures.middle
             case this.width > 479:
                 return this._settings.figures.normal
-            case this.width > 319:
+            case this.width > 320:
                 return this._settings.figures.improved
             default:
                 return this._settings.figures.minimum
