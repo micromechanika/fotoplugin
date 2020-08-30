@@ -76,7 +76,7 @@ class SmartFotoPlugin {
     }
 
     get unchangedAttributesImage() {
-        this.newImage.setAttribute('style', 'width: 100%; height: 100%; object-fit: cover;')
+        this.newImage.setAttribute('style', `width: 100%; height: 100%; object-fit: cover;`)
         this.newImage.setAttribute('decoding', 'async')
     }
 
