@@ -1,13 +1,29 @@
+/*
+#widths for minimization
+
+    minimum: 320
+    improved: 480
+    normal: 640
+    middle: 720
+    good: 828
+    super: 1024
+    maximum: 2560
+    full: 3840
+
+*/
+
 const figures = {
-    full: {src: 'img/full.jpg', alt: 'full'},
-    maximum: {src: 'img/maximum.jpg', alt: 'maximum'},
-    super: {src: 'img/super.jpg', alt: 'super'},
-    good: {src: 'img/good.jpg', alt: 'good'},
-    middle: {src: 'img/middle.jpg', alt: 'middle'},
-    normal: {src: 'img/normal.jpg', alt: 'normal'},
-    improved: {src: 'img/improved.jpg', alt: 'improved'},
-    minimum: {src: 'img/minimum.jpg', alt: 'minimum'},
+    full: {src: 'img/roadster/full.jpg', alt: 'full'},
+    maximum: {src: 'img/roadster/maximum.jpg', alt: 'maximum'},
+    super: {src: 'img/roadster/super.jpg', alt: 'super'},
+    good: {src: 'img/roadster/good.jpg', alt: 'good'},
+    middle: {src: 'img/roadster/middle.jpg', alt: 'middle'},
+    normal: {src: 'img/roadster/normal.jpg', alt: 'normal'},
+    improved: {src: 'img/roadster/improved.jpg', alt: 'improved'},
+    minimum: {src: 'img/roadster/minimum.jpg', alt: 'minimum'},
 }
+
+const imageContainerClass = `.myImage`
 
 class SmartFotoPlugin {
     constructor(settings) {
@@ -16,7 +32,7 @@ class SmartFotoPlugin {
     }
 
     get init() {
-        this.pluginClass = document.querySelector('.SmartFotoPlugin')
+        this.pluginClass = document.querySelector(`${this._settings.imageContainerClass}`)
         this.width = 0
         this.defaultFigure = this._settings.figures.minimum
         this.figure = this._settings.figures.minimum
@@ -50,7 +66,7 @@ class SmartFotoPlugin {
                 return this._settings.figures.middle
             case this.width > 479:
                 return this._settings.figures.normal
-            case this.width > 320:
+            case this.width > 319:
                 return this._settings.figures.improved
             default:
                 return this._settings.figures.minimum
@@ -95,18 +111,20 @@ class SmartFotoPlugin {
 
     static getDefaultSettings() {
         return {
+            imageContainerClass: '.SmartFotoPlugin',
             figures: {
-                full: {src: 'img/full.jpg', alt: 'full'},
-                maximum: {src: 'img/maximum.jpg', alt: 'maximum'},
-                super: {src: 'img/super.jpg', alt: 'super'},
-                good: {src: 'img/good.jpg', alt: 'good'},
-                middle: {src: 'img/middle.jpg', alt: 'middle'},
-                normal: {src: 'img/normal.jpg', alt: 'normal'},
-                improved: {src: 'img/improved.jpg', alt: 'improved'},
-                minimum: {src: 'img/minimum.jpg', alt: 'minimum'},
+                full: {src: 'img/roadster/full.jpg', alt: 'full'},
+                maximum: {src: 'img/roadster/maximum.jpg', alt: 'maximum'},
+                super: {src: 'img/roadster/super.jpg', alt: 'super'},
+                good: {src: 'img/roadster/good.jpg', alt: 'good'},
+                middle: {src: 'img/roadster/middle.jpg', alt: 'middle'},
+                normal: {src: 'img/roadster/normal.jpg', alt: 'normal'},
+                improved: {src: 'img/roadster/improved.jpg', alt: 'improved'},
+                minimum: {src: 'img/roadster/minimum.jpg', alt: 'minimum'},
             }
         }
     }
 }
 
-new SmartFotoPlugin({figures})
+new SmartFotoPlugin({imageContainerClass, figures})
+
