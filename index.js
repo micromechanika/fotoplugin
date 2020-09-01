@@ -28,37 +28,26 @@ class SmartFotoPlugin {
         this.newImage = document.createElement('img')
         this.makeConstruction
         this.renderAttributeImage
-        this.setEvents
+        this.addEvents
     }
 
-    get setEvents() {
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOMContentLoaded выполнилось')
-            this.postRenderTemplate
-        }, true)
+    get addEvents() {
+        this.newImage.onload = this.postRenderTemplate
+        window.onresize = this.postRenderTemplate
 
-        // document.removeEventListener('DOMContentLoaded', () => {
+        // document.querySelector('body').onresize = this.postRenderTemplate
+
+        // setTimeout(this.postRenderTemplate, 3000)
+
+        // window.addEventListener('load',()=>{
         //     this.postRenderTemplate
-        // }, true)
+        // })
 
-        window.addEventListener('load', () => {
-            console.log('load выполнилось')
-            this.postRenderTemplate
-        }, true)
-
-        // window.removeEventListener('load', () => {
+        // window.addEventListener('resize',()=>{
         //     this.postRenderTemplate
-        // }, true)
-
-        window.addEventListener('resize', () => {
-            console.log('resize выполнилось')
-            this.postRenderTemplate
-        }, true)
-
-        // window.removeEventListener('resize', () => {
-        //     this.postRenderTemplate
-        // }, true)
+        // })
     }
+
 
     get suitablePicture() {
         switch (true) {
@@ -193,7 +182,6 @@ class ManagedSmartFotoPlugin {
     }
 
 }
-
 
 
 fetch('images.json')
