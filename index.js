@@ -12,18 +12,6 @@
 
 */
 
-const figures = {
-    full: {src: 'img/roadster/full.jpg', alt: 'full'},
-    maximum: {src: 'img/roadster/maximum.jpg', alt: 'maximum'},
-    super: {src: 'img/roadster/super.jpg', alt: 'super'},
-    good: {src: 'img/roadster/good.jpg', alt: 'good'},
-    middle: {src: 'img/roadster/middle.jpg', alt: 'middle'},
-    normal: {src: 'img/roadster/normal.jpg', alt: 'normal'},
-    improved: {src: 'img/roadster/improved.jpg', alt: 'improved'},
-    minimum: {src: 'img/roadster/minimum.jpg', alt: 'minimum'},
-}
-
-const imageContainerClass = `.myImage`
 
 class SmartFotoPlugin {
     constructor(settings) {
@@ -44,12 +32,32 @@ class SmartFotoPlugin {
     }
 
     get setEvents() {
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded выполнилось')
+            this.postRenderTemplate
+        }, true)
+
+        // document.removeEventListener('DOMContentLoaded', () => {
+        //     this.postRenderTemplate
+        // }, true)
+
         window.addEventListener('load', () => {
+            console.log('load выполнилось')
             this.postRenderTemplate
         }, true)
+
+        // window.removeEventListener('load', () => {
+        //     this.postRenderTemplate
+        // }, true)
+
         window.addEventListener('resize', () => {
+            console.log('resize выполнилось')
             this.postRenderTemplate
         }, true)
+
+        // window.removeEventListener('resize', () => {
+        //     this.postRenderTemplate
+        // }, true)
     }
 
     get suitablePicture() {
@@ -113,18 +121,93 @@ class SmartFotoPlugin {
         return {
             imageContainerClass: '.SmartFotoPlugin',
             figures: {
-                full: {src: 'img/roadster/full.jpg', alt: 'full'},
-                maximum: {src: 'img/roadster/maximum.jpg', alt: 'maximum'},
-                super: {src: 'img/roadster/super.jpg', alt: 'super'},
-                good: {src: 'img/roadster/good.jpg', alt: 'good'},
-                middle: {src: 'img/roadster/middle.jpg', alt: 'middle'},
-                normal: {src: 'img/roadster/normal.jpg', alt: 'normal'},
-                improved: {src: 'img/roadster/improved.jpg', alt: 'improved'},
-                minimum: {src: 'img/roadster/minimum.jpg', alt: 'minimum'},
+                "full": {
+                    "alt": "full",
+                    "src": "img/0ad17b4c4bb067deaaa1cce28cbe57a1/full.jpg"
+                },
+                "good": {
+                    "alt": "good",
+                    "src": "img/0ad17b4c4bb067deaaa1cce28cbe57a1/good.jpg"
+                },
+                "super": {
+                    "alt": "super",
+                    "src": "img/0ad17b4c4bb067deaaa1cce28cbe57a1/super.jpg"
+                },
+                "normal": {
+                    "alt": "normal",
+                    "src": "img/0ad17b4c4bb067deaaa1cce28cbe57a1/normal.jpg"
+                },
+                "improved": {
+                    "alt": "improved",
+                    "src": "img/0ad17b4c4bb067deaaa1cce28cbe57a1/improved.jpg"
+                },
+                "middle": {
+                    "alt": "middle",
+                    "src": "img/0ad17b4c4bb067deaaa1cce28cbe57a1/middle.jpg"
+                },
+                "maximum": {
+                    "alt": "maximum",
+                    "src": "img/0ad17b4c4bb067deaaa1cce28cbe57a1/maximum.jpg"
+                },
+                "minimum": {
+                    "alt": "minimum",
+                    "src": "img/0ad17b4c4bb067deaaa1cce28cbe57a1/minimum.jpg"
+                }
             }
         }
     }
 }
 
-new SmartFotoPlugin({imageContainerClass, figures})
+class ManagedSmartFotoPlugin {
+    constructor() {
+        this.width = 0
+        this.init
+    }
+
+    get init() {
+        this.setevents
+    }
+
+    get setevents() {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.width = this.Width
+        }, true)
+
+        window.addEventListener('load', () => {
+            this.width = this.Width
+        }, true)
+
+        window.addEventListener('resize', () => {
+            this.width = this.Width
+        }, true)
+    }
+
+    get Width() {
+        return Math.max(
+            document.body.scrollWidth,
+            document.documentElement.scrollWidth,
+            document.body.offsetWidth,
+            document.documentElement.offsetWidth,
+            document.documentElement.clientWidth
+        );
+    }
+
+}
+
+
+
+fetch('images.json')
+    .then(responce => responce.json())
+    .then(images => {
+        for (let i = 1; i != images.length; i++) {
+            let imageContainerClass = `.somImage${i}`
+            let figures = images[i]
+            new SmartFotoPlugin({
+                imageContainerClass,
+                figures
+            })
+        }
+    })
+    .catch(err => console.error(err))
+
 
